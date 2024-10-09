@@ -96,11 +96,13 @@ defineProps({
                     <!-- Seção de Envio (Shipment) -->
                     <div class="mt-8 p-6 bg-white dark:bg-gray-800 dark:text-gray-200 rounded-lg">
                         <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200">Shipment Details</h3>
+                        <div v-if="shipment">                        
                         <p class="text-lg"><strong>Tracking Number:</strong> {{ shipment.tracking_number || 'N/A' }}</p>
                         <p class="text-lg"><strong>Carrier:</strong> {{ shipment.carrier || 'N/A' }}</p>
                         <p class="text-lg"><strong>Shipping Status:</strong> {{ shipment.shipping_status }}</p>
                         <p class="text-lg"><strong>Shipping Date:</strong> {{ shipment.shipping_date ? new Date(shipment.shipping_date).toLocaleDateString() : 'N/A' }}</p>
                         <p class="text-lg"><strong>Delivery Estimate:</strong> {{ shipment.delivery_estimate ? new Date(shipment.delivery_estimate).toLocaleDateString() : 'N/A' }}</p>
+                        </div>
                     </div>
                 </div>
             </div>

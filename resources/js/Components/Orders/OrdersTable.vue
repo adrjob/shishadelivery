@@ -88,7 +88,7 @@
                         </span>
                     </td>
 
-                    <td class="px-6 py-4">${{ order.total.toFixed(2) }}</td>
+                    <td class="px-6 py-4">  ${{ typeof order.total === 'number' ? order.total.toFixed(2) : 'N/A' }}                    </td>
                     <td class="px-6 py-4">
                         <div class="flex justify-end gap-4">
                             <!-- Ícone de olho para visualizar o pedido -->
