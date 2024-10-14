@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cashback;
+use App\Models\Client;
+use App\Models\Shipment;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Order;
@@ -15,20 +18,37 @@ class OrderController extends Controller
     {
         $orders = Order::with('items', 'shipment')->get(); // Carregar ordens com itens        
         return Inertia::render('Orders/Index', [
-            'orders' => $orders,            
+            'orders' => $orders,
         ]);
     }
 
     public function dashboard()
     {
-        // Buscar as 10 orders mais recentes, incluindo seus itens
-        $recentOrders = Order::with('items', 'shipment')->latest()->take(10)->get();
+        // Carregar os 10 itens mais recentes de cada entidade
+        $orders = Order::with('shipment')->latest()->take(10)->get();  // Últimas 10 ordens
+        $clients = Client::latest()->take(10)->get();  // Últimos 10 clientes
+        $cashbacks = Cashback::latest()->take(10)->get();  // Últimos 10 cashbacks
+        $shipments = Shipment::latest()->take(10)->get();  // Últimos 10 envios
 
-        // Retornar para a view via Inertia
+        // Totais
+        $totalOrders = Order::count();
+        $totalClients = Client::count();
+        $totalCashbacks = Cashback::count();
+        $totalShipments = Shipment::count();
+        // dd($orders);
+        // Passar os dados para o dashboard via Inertia
         return Inertia::render('Dashboard', [
-            'recentOrders' => $recentOrders
+            'orders' => $orders,
+            'clients' => $clients,
+            'cashbacks' => $cashbacks,
+            'shipments' => $shipments,
+            'totalOrders' => $totalOrders,
+            'totalClients' => $totalClients,
+            'totalCashbacks' => $totalCashbacks,
+            'totalShipments' => $totalShipments,
         ]);
     }
+
 
 
     public function show($id)
@@ -81,8 +101,18 @@ class OrderController extends Controller
 
         $orderData = json_decode($body, true);
 
-        if (isset($orderData['id'], $orderData['billing']['first_name'], $orderData['billing']['last_name'], $orderData['line_items'])) {
+        if (isset($orderData['id'], $orderData['billing']['first_name'], $orderData['billing']['last_name'], $orderData['billing']['email'], $orderData['line_items'])) {
             try {
+                // Cria ou atualiza o cliente apenas com nome e e-mail
+                $client = Client::updateOrCreate(
+                    ['email' => $orderData['billing']['email']], // Usa o e-mail como chave para atualizar ou criar o cliente
+                    [
+                        'name' => $orderData['billing']['first_name'] . ' ' . $orderData['billing']['last_name'], // Concatena nome e sobrenome
+                        'email' => $orderData['billing']['email'],
+                    ]
+                );
+
+                // Cria ou atualiza a ordem
                 $order = Order::updateOrCreate(
                     ['order_id' => $orderData['id']],
                     [
@@ -103,10 +133,11 @@ class OrderController extends Controller
                         'date_modified' => $orderData['date_modified'] ?? null,
                         'date_completed' => $orderData['date_completed'] ?? null,
                         'date_paid' => $orderData['date_paid'] ?? null,
+                        'client_id' => $client->id, // Associa a ordem ao cliente criado/atualizado
                     ]
                 );
 
-                // Processar itens
+                // Processa os itens do pedido
                 foreach ($orderData['line_items'] as $itemData) {
                     OrderItem::updateOrCreate(
                         ['order_id' => $order->id, 'product_name' => $itemData['name']],
@@ -119,8 +150,8 @@ class OrderController extends Controller
                     );
                 }
 
-                Log::info('Ordem processada com sucesso', ['order_id' => $order->order_id]);
-                return response()->json(['message' => 'Ordem processada com sucesso!']);
+                Log::info('Ordem e cliente processados com sucesso', ['order_id' => $order->order_id, 'client_id' => $client->id]);
+                return response()->json(['message' => 'Ordem e cliente processados com sucesso!']);
             } catch (\Exception $e) {
                 Log::error('Falha ao Processar Ordem', [
                     'error' => $e->getMessage(),
@@ -133,4 +164,5 @@ class OrderController extends Controller
             return response()->json(['error' => 'Dados da ordem incompletos'], 400);
         }
     }
+
 }

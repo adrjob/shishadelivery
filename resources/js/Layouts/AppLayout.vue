@@ -60,6 +60,28 @@ const logout = () => {
                                     Orders
                                 </NavLink>
                             </div>
+
+                            <!-- Navigation Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('clients.index')" :active="route().current('clients.index')">
+                                    Clients
+                                </NavLink>
+                            </div>
+
+                            <!-- Navigation Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('cashback.index')" :active="route().current('cashback.index')">
+                                    Cashback
+                                </NavLink>
+                            </div>
+
+                            <!-- Navigation Links -->
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('shipments.index')" :active="route().current('shipments.index')">
+                                    Shipment
+                                </NavLink>
+                            </div>
+                            
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">

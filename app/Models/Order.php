@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'order_id',
         'customer_name',
@@ -26,6 +27,8 @@ class Order extends Model
         'date_created',
         'date_modified',
         'date_completed',
+        'trx_wallet', 
+        'client_id'  // Chave estrangeira para Client
         // Adicionar mais campos conforme necessário
     ];
 
@@ -35,9 +38,21 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    // Relacionamento com o envio (shipment)
     public function shipment()
     {
         return $this->hasOne(Shipment::class); // Um pedido tem um envio
     }
-}
 
+    // Relacionamento com o cashback
+    public function cashback()
+    {
+        return $this->hasOne(Cashback::class);
+    }
+
+    // Relacionamento com o cliente
+    public function client()
+    {
+        return $this->belongsTo(Client::class); // Um pedido pertence a um cliente
+    }
+}

@@ -9,6 +9,16 @@ use Inertia\Inertia;
 
 class ShipmentController extends Controller
 {
+    public function index()
+    {
+        // Busca todos os envios (shipments) do banco de dados
+        $shipments = Shipment::with('order')->get(); // Carrega os relacionamentos com as ordens
+
+        // Retorna a view para o componente Vue 'Shipments/Index' passando os envios
+        return Inertia::render('Shipment/Index', [
+            'shipments' => $shipments,
+        ]);
+    }
     /**
      * Exibe o formulário para criar um envio.
      */
@@ -52,7 +62,7 @@ class ShipmentController extends Controller
 
         return Inertia::render('Shipments/UpdateStatus', [
             'shipment' => $shipment, // Passando o shipment para o componente Vue
-        ]);        
+        ]);
     }
 
     /**
