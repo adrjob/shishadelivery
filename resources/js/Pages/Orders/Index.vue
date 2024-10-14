@@ -17,10 +17,10 @@ defineProps({
 
         <div class="py-12 pl-5 pr-5">           
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="shadow-xl sm:rounded-lg">            
+                <div class="overflow-x-auto shadow-xl sm:rounded-lg">            
                     <OrdersTable :orders="orders" />
                 </div>
             </div>
-        </div>
+        </div>        
     </AppLayout>
 </template>
