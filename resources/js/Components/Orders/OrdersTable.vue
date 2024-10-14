@@ -1,7 +1,7 @@
 <template>
     <div class="overflow-x-auto">
         <div class="min-w-full overflow-hidden rounded-lg border border-gray-200 shadow-md dark:border-gray-700">
-            <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+            <table class="min-w-full table-auto bg-white text-left text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-400">
                 <thead class="bg-gray-50 dark:bg-gray-700">
                     <tr>
                         <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200">Order ID</th>
@@ -57,6 +57,7 @@
 
 <script setup>
 import { defineProps } from "vue";
+import { getStatusClass, getStatusColor } from '@/Utils/statusHelpers';
 
 // Define as propriedades que o componente receberá
 const props = defineProps({
@@ -67,31 +68,5 @@ const props = defineProps({
 function formatDate(value) {
     const date = new Date(value);
     return date.toLocaleDateString(); // Formata a data
-}
-
-function getStatusClass(status, type) {
-    // Se for 'order' e o status for 'Completed', ou 'shipment' com status 'Delivered'
-    if (
-        (type === "order" && status === "completed") ||
-        (type === "shipment" && status === "Delivered")
-    ) {
-        return "inline-flex items-center gap-1 rounded-full bg-green-50 text-green-600 px-2 py-1 text-xs font-semibold dark:bg-green-600 dark:text-green-100";
-    }
-
-    // Qualquer outro status
-    return "inline-flex items-center gap-1 rounded-full bg-yellow-50 text-yellow-600 px-2 py-1 text-xs font-semibold dark:bg-yellow-600 dark:text-yellow-100";
-}
-
-function getStatusColor(status, type) {
-    // Se for 'order' e o status for 'Completed', ou 'shipment' com status 'Delivered'
-    if (
-        (type === "order" && status === "completed") ||
-        (type === "shipment" && status === "Delivered")
-    ) {
-        return "h-1.5 w-1.5 rounded-full bg-green-600 dark:bg-green-100";
-    }
-
-    // Qualquer outro status
-    return "h-1.5 w-1.5 rounded-full bg-yellow-600 dark:bg-yellow-100";
 }
 </script>

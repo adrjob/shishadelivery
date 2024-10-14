@@ -15,9 +15,9 @@ defineProps({
             </h2>
         </template>
 
-        <div class="py-12">           
+        <div class="py-12 pl-5 pr-5">           
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">            
+                <div class="shadow-xl sm:rounded-lg">            
                     <OrdersTable :orders="orders" />
                 </div>
             </div>
