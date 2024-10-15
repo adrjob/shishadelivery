@@ -3,7 +3,8 @@ export function getStatusClass(status, type) {
     if (
         (type === "order" && status === "completed") ||
         (type === "shipment" && status === "Delivered") ||
-        (type === "cashback" && status === "paid")
+        (type === "cashback" && status === "paid") ||
+        (type === "shipment" && status === "Order Received")
     ) {
         return "inline-flex items-center gap-1 rounded-full bg-green-50 text-green-600 px-2 py-1 text-xs font-semibold dark:bg-green-600 dark:text-green-100";
     }
@@ -17,7 +18,8 @@ export function getStatusColor(status, type) {
     if (
         (type === "order" && status === "completed") ||
         (type === "shipment" && status === "Delivered") ||
-        (type === "cashback" && status === "paid")
+        (type === "cashback" && status === "paid") ||
+        (type === "shipment" && status === "Order Received")
     ) {
         return "h-1.5 w-1.5 rounded-full bg-green-600 dark:bg-green-100";
     }

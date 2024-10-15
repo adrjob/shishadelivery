@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -26,9 +27,12 @@ class ClientController extends Controller
         // Busca o cliente pelo ID
         $client = Client::findOrFail($id);
 
-        // Retorna a página com os detalhes do cliente
+        // Busca as ordens associadas ao email do cliente
+        $orders = Order::where('billing_email', $client->email)->get();        
+        // Retorna a página com os detalhes do cliente e as ordens
         return Inertia::render('Clients/Show', [
             'client' => $client,
+            'orders' => $orders,
         ]);
     }
 

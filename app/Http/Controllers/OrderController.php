@@ -16,12 +16,14 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with('items', 'shipment')->get(); // Carregar ordens com itens        
+        // Supondo que os pedidos têm um relacionamento com `shipments`
+        $orders = Order::all();
+        // dd($orders);
+        // Passando os dados para a view do Inertia
         return Inertia::render('Orders/Index', [
             'orders' => $orders,
         ]);
     }
-
     public function dashboard()
     {
         // Carregar os 10 itens mais recentes de cada entidade
@@ -137,6 +139,9 @@ class OrderController extends Controller
                     ]
                 );
 
+                // Dispara o job para envio de email de notificação
+                dispatch(new \App\Jobs\SendOrderPreparationEmail($order));
+
                 // Processa os itens do pedido
                 foreach ($orderData['line_items'] as $itemData) {
                     OrderItem::updateOrCreate(
@@ -164,5 +169,4 @@ class OrderController extends Controller
             return response()->json(['error' => 'Dados da ordem incompletos'], 400);
         }
     }
-
 }

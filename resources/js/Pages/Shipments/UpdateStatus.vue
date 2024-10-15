@@ -19,10 +19,10 @@ const submitForm = () => {
 </script>
 
 <template>
-  <AppLayout title="Update Shipment Status for Shipment #{{ shipment.order_id }}">
+  <AppLayout title="Update Shipment Status for Shipment #{{ shipment.order.order_id }}">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 dark:text-white leading-tight">
-        Update Shipment Status for Shipment #{{ shipment.order_id }}
+        Update Shipment Status for Shipment #{{ shipment.order.order_id }}
       </h2>
     </template>
 

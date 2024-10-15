@@ -9,7 +9,7 @@
                     <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200">Order Status</th>
                     <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200">Shipment Status</th>
                     <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200">Total</th>
-                    <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200"></th>
+                    <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200 text-center">Actions</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100 border-t border-gray-100 dark:divide-gray-700 dark:border-gray-700">
@@ -29,9 +29,9 @@
                             {{ order.shipment ? order.shipment.shipping_status : "No shipment" }}
                         </span>
                     </td>
-                    <td class="px-6 py-4">${{ typeof order.total === 'number' ? order.total.toFixed(2) : 'N/A' }}</td>
+                    <td class="px-6 py-4 text-xs md:text-sm lg:text-base">${{ typeof order.total === 'number' ? order.total.toFixed(2) : 'N/A' }}</td>
                     <td class="px-6 py-4">
-                        <div class="flex justify-end gap-4">
+                        <div class="flex justify-center items-center space-x-4">
                             <a :href="`/orders/${order.id}`" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="View Order">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -53,6 +53,7 @@
 
 <script setup>
 import { defineProps } from "vue";
+import { getStatusClass, getStatusColor } from '@/Utils/statusHelpers'; // Importa as funções do utils
 
 // Define as propriedades que o componente receberá
 const props = defineProps({
@@ -63,31 +64,5 @@ const props = defineProps({
 function formatDate(value) {
     const date = new Date(value);
     return date.toLocaleDateString(); // Formata a data
-}
-
-function getStatusClass(status, type) {
-    // Se for 'order' e o status for 'Completed', ou 'shipment' com status 'Delivered'
-    if (
-        (type === "order" && status === "completed") ||
-        (type === "shipment" && status === "Delivered")
-    ) {
-        return "inline-flex items-center gap-1 rounded-full bg-green-50 text-green-600 px-2 py-1 text-xs font-semibold dark:bg-green-600 dark:text-green-100";
-    }
-
-    // Qualquer outro status
-    return "inline-flex items-center gap-1 rounded-full bg-yellow-50 text-yellow-600 px-2 py-1 text-xs font-semibold dark:bg-yellow-600 dark:text-yellow-100";
-}
-
-function getStatusColor(status, type) {
-    // Se for 'order' e o status for 'Completed', ou 'shipment' com status 'Delivered'
-    if (
-        (type === "order" && status === "completed") ||
-        (type === "shipment" && status === "Delivered")
-    ) {
-        return "h-1.5 w-1.5 rounded-full bg-green-600 dark:bg-green-100";
-    }
-
-    // Qualquer outro status
-    return "h-1.5 w-1.5 rounded-full bg-yellow-600 dark:bg-yellow-100";
 }
 </script>

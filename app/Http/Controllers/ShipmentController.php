@@ -58,7 +58,7 @@ class ShipmentController extends Controller
 
     public function edit($id)
     {
-        $shipment = Shipment::findOrFail($id); // Busca o envio pelo ID
+        $shipment = Shipment::with('order')->findOrFail($id); // Busca o envio pelo ID
 
         return Inertia::render('Shipments/UpdateStatus', [
             'shipment' => $shipment, // Passando o shipment para o componente Vue

@@ -6,7 +6,7 @@
                     <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200">Order ID</th>
                     <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200">TRX Wallet</th>
                     <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200">Cashback Status</th>
-                    <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200">Actions</th>
+                    <th scope="col" class="px-6 py-4 font-medium text-gray-900 dark:text-gray-200 text-center">Actions</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100 border-t border-gray-100 dark:divide-gray-600 dark:border-gray-600">
@@ -19,10 +19,12 @@
                             {{ cashback.status === 'paid' ? 'Paid' : 'Pending' }}
                         </span>
                     </td>
-                    <td class="px-6 py-4">
-                        <div class="flex justify-end gap-4">
+                    <td class="px-6 py-4 text-center">
+                        <div class="flex justify-center gap-4">
                             <button v-if="cashback.status === 'pending'" @click="markAsPaid(cashback.id)" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="Mark as Paid">
-                                Mark as Paid
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
                             </button>
                         </div>
                     </td>
