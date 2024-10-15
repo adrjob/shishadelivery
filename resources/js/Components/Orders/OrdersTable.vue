@@ -53,7 +53,6 @@
 
 <script setup>
 import { defineProps } from "vue";
-import { getStatusClass, getStatusColor } from '@/Utils/statusHelpers'; // Usando o utils para as classes
 
 // Define as propriedades que o componente receberá
 const props = defineProps({
@@ -64,5 +63,32 @@ const props = defineProps({
 function formatDate(value) {
     const date = new Date(value);
     return date.toLocaleDateString();
+}
+
+// Funções de status para cores e classes
+function getStatusClass(status, type) {
+    if (
+        (type === 'order' && status === 'completed') ||
+        (type === 'shipment' && status === 'Delivered') ||
+        (type === 'cashback' && status === 'paid')
+    ) {
+        return 'inline-flex items-center gap-1 rounded-full bg-green-50 text-green-600 px-2 py-1 text-xs font-semibold dark:bg-green-600 dark:text-green-100';
+    } else if (type === 'shipment' && status === 'No shipment') {
+        return 'inline-flex items-center gap-1 rounded-full bg-red-50 text-red-600 px-2 py-1 text-xs font-semibold dark:bg-red-600 dark:text-red-100';
+    }
+    return 'inline-flex items-center gap-1 rounded-full bg-yellow-50 text-yellow-600 px-2 py-1 text-xs font-semibold dark:bg-yellow-600 dark:text-yellow-100';
+}
+
+function getStatusColor(status, type) {
+    if (
+        (type === 'order' && status === 'completed') ||
+        (type === 'shipment' && status === 'Delivered') ||
+        (type === 'cashback' && status === 'paid')
+    ) {
+        return 'bg-green-600 dark:bg-green-100';
+    } else if (type === 'shipment' && status === 'No shipment') {
+        return 'bg-red-600 dark:bg-red-100';
+    }
+    return 'bg-yellow-600 dark:bg-yellow-100';
 }
 </script>
