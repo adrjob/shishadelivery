@@ -11,7 +11,7 @@ class Order extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
+
     protected $fillable = [
         'order_id',
         'customer_name',
@@ -30,7 +30,7 @@ class Order extends Model
         'date_created',
         'date_modified',
         'date_completed',
-        'trx_wallet', 
+        'trx_wallet',
         'client_id'  // Chave estrangeira para Client
         // Adicionar mais campos conforme necessário
     ];
@@ -58,4 +58,25 @@ class Order extends Model
     {
         return $this->belongsTo(Client::class); // Um pedido pertence a um cliente
     }
+
+    // Order.php (modelo)
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Deletar o Shipment associado quando uma Order é deletada
+        static::deleting(function ($order) {
+            if ($order->shipment) {
+                $order->shipment->delete();
+            }
+        });
+
+        // Restaurar o Shipment associado quando a Order é restaurada
+        static::restoring(function ($order) {
+            if ($order->shipment()->withTrashed()->exists()) {
+                $order->shipment()->restore();
+            }
+        });
+    }
+
 }
