@@ -20,7 +20,7 @@ defineProps({
                     as="button"
                     class="bg-[#feac40] text-white px-4 py-2 rounded-md"
                 >
-                    Actives
+                    Back
                 </Link>
             </div>
         </template>
