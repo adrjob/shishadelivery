@@ -1,13 +1,6 @@
 <script setup>
 import { Head, usePage } from "@inertiajs/vue3";
-import { useRouter } from "vue-router";
 import { defineProps } from 'vue';
-
-// Função para voltar à página anterior
-const router = useRouter();
-const goBack = () => {
-    router.back();
-};
 
 defineProps({
     order: Object, // Recebemos a ordem como uma prop

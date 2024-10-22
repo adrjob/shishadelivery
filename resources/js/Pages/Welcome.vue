@@ -22,9 +22,6 @@ const submitForm = () => {
             if (response.shipment_exists) {
                 // Redireciona para a página de status da ordem
                 window.location.href = response.redirect_url;
-            } else {
-                // Exibe alerta caso não tenha shipment
-                alert(response.message);
             }
         },
     });

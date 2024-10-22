@@ -18,7 +18,7 @@ defineProps({
                 <Link
                     :href="route('orders.trashed')"
                     as="button"
-                    class="bg-[#feac40] text-white px-4 py-2 rounded-md"
+                    class="bg-[#feac40] text-white px-4 rounded-md"
                 >
                     Trash
                 </Link>

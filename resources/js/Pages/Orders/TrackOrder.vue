@@ -2,11 +2,6 @@
 import { Head, useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 
-// Função para lidar com possíveis erros ao carregar a imagem
-function handleImageError() {
-    document.getElementById("background")?.classList.add("!hidden");
-}
-
 // Obtém os erros e mensagens da sessão
 const { props } = usePage();
 const errors = props.errors || {};
@@ -14,43 +9,25 @@ const successMessage = props.flash?.success;
 
 // Configurando o formulário com useForm para enviar os dados
 const form = useForm({
-    order_id: "",
-    email: "",
+    order_id: "",    
 });
 
 // Função para submeter o formulário e redirecionar para a página de status
 const submitForm = () => {
-    form.get(route('order.status', { order_id: form.order_id }), {
+    form.get(route("order.status", { order_id: form.order_id }), {
         onError: (errors) => {
             console.log(errors);
         },
-        onSuccess: (page) => {
-            form.reset(); // Reseta o formulário após o sucesso
-        },
     });
-};
-
-// Ref para controlar a visibilidade dos modais
-const showOrderModal = ref(false);
-const showWalletModal = ref(false);
-
-// Funções para abrir e fechar os modais
-const openOrderModal = () => {
-    showOrderModal.value = true;
-};
-const openWalletModal = () => {
-    showWalletModal.value = true;
-};
-const closeModal = () => {
-    showOrderModal.value = false;
-    showWalletModal.value = false;
 };
 </script>
 
 <template>
-    <Head title="Track Your Order" />
+    <Head title="Track sYour Order" />
 
-    <div class="bg-gray-50 dark:bg-gray-900 text-black/50 dark:text-white/50 min-h-screen flex flex-col justify-center items-center">
+    <div
+        class="bg-gray-50 dark:bg-gray-900 text-black/50 dark:text-white/50 min-h-screen flex flex-col justify-center items-center"
+    >
         <div class="text-center max-w-3xl mb-8">
             <img
                 src="/images/logo-200.png"
@@ -61,7 +38,8 @@ const closeModal = () => {
                 Track Your Order
             </h1>
             <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
-                Enter your order details to track the shipment and status of your order.
+                Enter your order details to track the shipment and status of
+                your order.
             </p>
         </div>
 
@@ -73,7 +51,8 @@ const closeModal = () => {
                     <label
                         for="order_id"
                         class="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                    >Order ID</label>
+                        >Order ID</label
+                    >
                     <input
                         type="text"
                         id="order_id"
@@ -88,7 +67,8 @@ const closeModal = () => {
                     <label
                         for="email"
                         class="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                    >Email</label>
+                        >Email</label
+                    >
                     <input
                         type="email"
                         id="email"
