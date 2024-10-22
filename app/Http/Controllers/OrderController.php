@@ -51,7 +51,44 @@ class OrderController extends Controller
         ]);
     }
 
+    public function checkShipment($order_id)
+    {
+        // Buscar a ordem pelo ID da ordem externa
+        $fullorder = Order::where('order_id', $order_id)->first();
 
+        if (!$fullorder) {
+            return redirect()->back()->withErrors(['order' => 'Order not found']);
+        }
+
+        // Carregar a ordem e verificar se tem shipment
+        $order = Order::with('shipment')->find($fullorder->id);
+
+        if ($order && $order->shipment) {
+            // Redireciona para a página de status da ordem
+            return redirect()->route('order.status', ['order_id' => $order_id]);
+        }
+
+        // Se o shipment não existir, retornar com uma mensagem de erro
+        return redirect()->back()->withErrors(['shipment' => 'No shipment data available for this order.']);
+    }
+
+    public function status($order_id)
+    {
+        $fullorder = Order::where('order_id', $order_id)->first();
+
+        if (!$fullorder) {
+            abort(404, 'Order not found');
+        }
+
+        // Buscar a ordem e o shipment
+        $order = Order::with('shipment')->findOrFail($fullorder->id);
+
+        // Retornar para a view com os dados da ordem e shipment
+        return Inertia::render('Orders/TrackOrderResult', [
+            'order' => $order,
+            'shipment' => $order->shipment,
+        ]);
+    }
 
     public function show($id)
     {
@@ -62,7 +99,6 @@ class OrderController extends Controller
             'shipment' => $order->shipment, // Passa o envio
         ]);
     }
-
 
     public function handleWebhook(Request $request)
     {
@@ -169,4 +205,29 @@ class OrderController extends Controller
             return response()->json(['error' => 'Dados da ordem incompletos'], 400);
         }
     }
+
+    public function destroy($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->delete();  // Isso marcará a ordem como excluída, mas não a removerá fisicamente
+        return redirect()->back()->with('success', 'Order deleted successfully.');
+    }
+
+    public function restore($id)
+    {
+        $order = Order::withTrashed()->findOrFail($id);  // Isso buscará uma ordem excluída
+        $order->restore();  // Isso restaurará a ordem excluída
+        return redirect()->back()->with('success', 'Order restored successfully.');
+    }
+
+    public function trashed()
+    {        
+        $trashedOrders = Order::onlyTrashed()->get();  // Busca apenas as ordens excluídas
+        // dd($trashedOrders);
+        return Inertia::render('Orders/Trashed', [
+            'orders' => $trashedOrders,
+        ]);
+    }
+
+
 }

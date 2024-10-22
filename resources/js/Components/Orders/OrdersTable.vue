@@ -43,6 +43,12 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 13h2.973c.354 0 .693-.186.882-.488l.64-.987A1.5 1.5 0 019.973 11h4.054a1.5 1.5 0 011.478 1.212l.64.987c.19.302.528.488.882.488H21m-3.82 4a2 2 0 100-4 2 2 0 000 4zm-10 0a2 2 0 100-4 2 2 0 000 4zM21 16v-3a1 1 0 00-1-1h-4.027a1 1 0 01-.988-.836l-.47-2.823A2 2 0 0012.538 8H9.462a2 2 0 00-1.977 1.341l-.47 2.823A1 1 0 016.027 13H3a1 1 0 00-1 1v3h19z" />
                                 </svg>
                             </a>
+                            <!-- Ícone de excluir com a função deleteOrder -->
+                            <button @click="deleteOrder(order.id)" class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-500" title="Delete Order">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -52,11 +58,11 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { useForm } from '@inertiajs/vue3';
+import { getStatusClass, getStatusColor } from '@/Utils/statusHelpers';
 
-// Define as propriedades que o componente receberá
 const props = defineProps({
-    orders: Array, // Recebe as ordens como propriedade
+    orders: Array,
 });
 
 // Função para formatar a data
@@ -65,30 +71,19 @@ function formatDate(value) {
     return date.toLocaleDateString();
 }
 
-// Funções de status para cores e classes
-function getStatusClass(status, type) {
-    if (
-        (type === 'order' && status === 'completed') ||
-        (type === 'shipment' && status === 'Delivered') ||
-        (type === 'cashback' && status === 'paid')
-    ) {
-        return 'inline-flex items-center gap-1 rounded-full bg-green-50 text-green-600 px-2 py-1 text-xs font-semibold dark:bg-green-600 dark:text-green-100';
-    } else if (type === 'shipment' && status === 'No shipment') {
-        return 'inline-flex items-center gap-1 rounded-full bg-red-50 text-red-600 px-2 py-1 text-xs font-semibold dark:bg-red-600 dark:text-red-100';
-    }
-    return 'inline-flex items-center gap-1 rounded-full bg-yellow-50 text-yellow-600 px-2 py-1 text-xs font-semibold dark:bg-yellow-600 dark:text-yellow-100';
-}
+// Configurando o formulário de deleção de ordens usando useForm
+const form = useForm({
+    order_id: null,
+});
 
-function getStatusColor(status, type) {
-    if (
-        (type === 'order' && status === 'completed') ||
-        (type === 'shipment' && status === 'Delivered') ||
-        (type === 'cashback' && status === 'paid')
-    ) {
-        return 'bg-green-600 dark:bg-green-100';
-    } else if (type === 'shipment' && status === 'No shipment') {
-        return 'bg-red-600 dark:bg-red-100';
+function deleteOrder(id) {
+    if (confirm('Are you sure you want to delete this order?')) {
+        form.order_id = id;
+        form.delete(`/orders/${id}`, {
+            onSuccess: () => {
+                alert('Order deleted successfully!');
+            }
+        });
     }
-    return 'bg-yellow-600 dark:bg-yellow-100';
 }
 </script>
