@@ -1,10 +1,11 @@
+<!-- resources/views/emails/order-status.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Being Prepared</title>
+    <title>Order: {{ $order->order_id }} - Status</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,8 +40,11 @@
 <body>
     <div class="container">
         <h1>Dear {{ $order->customer_name }},</h1>
-        <p>Thank you for your order!</p>
-        <p>We are excited to inform you that your product(s) are currently being prepared for shipment.</p>
+        @if($isDeliverd)
+            <p>Your order has been successfully delivered!</p>
+        @else
+            <p>We are excited to inform you that your product(s) has been shipped.</p>
+        @endif        
 
         <div class="details">
             <h3>Order Details:</h3>
@@ -49,9 +53,11 @@
             <p><strong>Shipping Address:</strong> {{ $order->billing_address_1 }}, {{ $order->billing_city }}, {{ $order->billing_state }} - {{ $order->billing_postcode }}</p>
         </div>
 
-        <p>You will receive another email with tracking information once your order has been shipped.</p>
-        
-        <p>Thank you for shopping with us!</p>
+        @if($isDeliverd)
+            <p>Thank you for shopping with us!</p>
+        @else
+            <p>You will receive another email with tracking information once your order has been delivered.</p>
+        @endif    
         
         <div class="footer">
             <p>If you have any questions, feel free to <a href="mailto:info@shishacoin.io">contact us</a>.</p>

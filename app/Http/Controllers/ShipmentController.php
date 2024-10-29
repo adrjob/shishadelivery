@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderDelivered;
+use App\Mail\OrderShipped;
 use App\Models\Order;
 use App\Models\Shipment;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Mail;
 
 class ShipmentController extends Controller
 {
@@ -70,6 +73,8 @@ class ShipmentController extends Controller
      */
     public function updateStatus(Request $request, Shipment $shipment)
     {
+        $order = $shipment->order;
+        // dd($order);
         $request->validate([
             'shipping_status' => 'required|string|max:255',
         ]);
@@ -78,6 +83,15 @@ class ShipmentController extends Controller
         $shipment->update([
             'shipping_status' => $request->shipping_status,
         ]);
+
+        if($request->shipping_status == 'Delivered') {
+            // Envia um email para o cliente informando que o pedido foi entregue
+            dispatch(new \App\Jobs\SendOrderDeliveredEmail($order));
+        }
+        if($request->shipping_status == 'Shipped') {
+            // Envia um email para o cliente informando que o pedido foi enviado
+            dispatch(new \App\Jobs\SendOrderShippedEmail($order));
+        }
 
         return redirect()->route('orders.show', $shipment->order->id)
             ->with('success', 'Shipment status updated successfully.');
