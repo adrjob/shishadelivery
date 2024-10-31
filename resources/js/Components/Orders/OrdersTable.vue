@@ -123,7 +123,7 @@
                         <td class="px-6 py-4 text-center">
                             <!-- {{ order.shipment ? order.shipment.id : "No order" }} -->
                             <div class="flex justify-center gap-4">
-                                <Link :href="route('order.index', $order.id)" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="View Order">
+                                <Link v-if="order" :href="route('order.index', order.id)" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="View Order">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
