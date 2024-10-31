@@ -55,7 +55,7 @@ const submitForm = () => {
               <input type="date" v-model="form.delivery_estimate" id="delivery_estimate" class="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white" />
             </div>
 
-            <div class="mb-4">
+            <!-- <div class="mb-4">
               <label for="shipping_status" class="block font-semibold text-gray-700 dark:text-gray-300">Shipping Status:</label>
               <select v-model="form.shipping_status" id="shipping_status" class="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white">
                 <option value="Order Received">Order Received</option>
@@ -65,7 +65,7 @@ const submitForm = () => {
                 <option value="Delivered">Delivered</option>
                 <option value="Cancelled">Cancelled</option>
               </select>
-            </div>
+            </div> -->
 
             <button type="submit" class="bg-[#feac40] text-white px-4 py-2 rounded-md">Create Shipment</button>
           </form>

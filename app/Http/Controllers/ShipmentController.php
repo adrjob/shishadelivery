@@ -52,7 +52,7 @@ class ShipmentController extends Controller
             'carrier' => $request->carrier,
             'shipping_date' => $request->shipping_date,
             'delivery_estimate' => $request->delivery_estimate,
-            'shipping_status' => $request->shipping_status,
+            'shipping_status' => 'processing',
         ]);
 
         return redirect()->route('orders.show', $order->id)
