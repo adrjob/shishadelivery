@@ -115,12 +115,16 @@
                         </td>
                         <td class="px-6 py-4 text-center">
                             ${{
-                                order.items
-                                    .reduce(
-                                        (total, item) => total + item.total,
-                                        0
-                                    )
-                                    .toFixed(2)
+                                order.items.length > 0
+                                    ? order.items
+                                          .reduce(
+                                              (total, item) =>
+                                                  total +
+                                                  parseFloat(item.total),
+                                              0
+                                          )
+                                          .toFixed(2)
+                                    : "N/A"
                             }}
                         </td>
 
