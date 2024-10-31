@@ -148,7 +148,7 @@
                                     </svg>
                                 </a>
                                 <a
-                                    v-if="order.shipment && order.shipment.id"
+                                    v-if="order.shipment && order.shipment.shipping_status"
                                     :href="`/shipments/${order.shipment.id}/edit`"
                                     class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500"
                                     title="Manage Shipment"
