@@ -121,7 +121,8 @@
                             }}
                         </td>
                         <td class="px-6 py-4 text-center">
-                            <div class="flex justify-center gap-4">
+                            {{ order.shipment ? order.shipment.id : "No order" }}
+                            <!-- <div class="flex justify-center gap-4">
                                 <a :href="`/orders/${order.id}`" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="View Order">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +170,7 @@
                                         />
                                     </svg>
                                 </button>
-                            </div>
+                            </div> -->
                         </td>
                     </tr>
                 </tbody>
