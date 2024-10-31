@@ -123,7 +123,7 @@
                         <td class="px-6 py-4 text-center">
                             <!-- {{ order.shipment ? order.shipment.id : "No order" }} -->
                             <div class="flex justify-center gap-4">
-                                <Link v-if="order" :href="route('orders.index', order.id)" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="View Order">
+                                <Link v-if="order" :href="route('orders.show', order.id)" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="View Order">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -145,11 +145,11 @@
                                     </svg>
                                 </Link>
                                 
-                                <a :href="order.shipment ? `/shipments/${order.shipment.id}/edit` : `/orders/${order.id}/shipments/create`" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="Manage Shipment">
+                                <Link :href="order.shipment ? route('shipments.edit', order.id) : route('shipments.create')" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="Manage Shipment">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 13h2.973c.354 0 .693-.186.882-.488l.64-.987A1.5 1.5 0 019.973 11h4.054a1.5 1.5 0 011.478 1.212l.64.987c.19.302.528.488.882.488H21m-3.82 4a2 2 0 100-4 2 2 0 000 4zm-10 0a2 2 0 100-4 2 2 0 000 4zM21 16v-3a1 1 0 00-1-1h-4.027a1 1 0 01-.988-.836l-.47-2.823A2 2 0 0012.538 8H9.462a2 2 0 00-1.977 1.341l-.47 2.823A1 1 0 016.027 13H3a1 1 0 00-1 1v3h19z" />
                                     </svg>
-                                </a>
+                                </Link>
                                 <button
                                     @click="deleteOrder(order.id)"
                                     class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-500"
