@@ -17,8 +17,8 @@ class OrderController extends Controller
     public function index()
     {
         // Supondo que os pedidos têm um relacionamento com `shipments`
-        $orders = Order::all();
-        // dd($orders);
+        $orders = Order::with('shipment')->all();
+        dd($orders);
         // Passando os dados para a view do Inertia
         return Inertia::render('Orders/Index', [
             'orders' => $orders,
