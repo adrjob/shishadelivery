@@ -57,9 +57,9 @@ const logout = () => {
                                 <NavLink :href="route('clients.index')" :active="route().current('clients.index')">
                                     Clients
                                 </NavLink>
-                                <NavLink :href="route('cashback.index')" :active="route().current('cashback.index')">
+                                <!-- <NavLink :href="route('cashback.index')" :active="route().current('cashback.index')">
                                     Cashback
-                                </NavLink>
+                                </NavLink> -->
                                 <NavLink :href="route('shipments.index')" :active="route().current('shipments.index')">
                                     Shipment
                                 </NavLink>
@@ -127,9 +127,9 @@ const logout = () => {
                         <ResponsiveNavLink :href="route('clients.index')" :active="route().current('clients.index')">
                             Clients
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('cashback.index')" :active="route().current('cashback.index')">
+                        <!-- <ResponsiveNavLink :href="route('cashback.index')" :active="route().current('cashback.index')">
                             Cashback
-                        </ResponsiveNavLink>
+                        </ResponsiveNavLink> -->
                         <ResponsiveNavLink :href="route('shipments.index')" :active="route().current('shipments.index')">
                             Shipment
                         </ResponsiveNavLink>
