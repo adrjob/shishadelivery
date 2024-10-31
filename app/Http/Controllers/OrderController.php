@@ -18,7 +18,7 @@ class OrderController extends Controller
     {
         // Supondo que os pedidos têm um relacionamento com `shipments`
         $orders = Order::with('shipment', 'items')->get();
-        // dd($orders);
+        dd($orders->items);
         // Passando os dados para a view do Inertia
         return Inertia::render('Orders/Index', [
             'orders' => $orders,
