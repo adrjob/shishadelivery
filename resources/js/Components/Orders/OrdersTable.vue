@@ -123,7 +123,7 @@
                         <td class="px-6 py-4 text-center">
                             <!-- {{ order.shipment ? order.shipment.id : "No order" }} -->
                             <div class="flex justify-center gap-4">
-                                <a :href="`/orders/${order.id}`" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="View Order">
+                                <Link :href="route('order.index', $order.id)" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="View Order">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -143,7 +143,7 @@
                                             d="M2.458 12C3.732 7.943 7.522 5 12 5c4.478 0 8.268 2.943 9.542 7-.16.48-.348.944-.562 1.387a11.957 11.957 0 01-8.98 5.95A11.957 11.957 0 012.458 12z"
                                         />
                                     </svg>
-                                </a>
+                                </Link>
                                 
                                 <a :href="order.shipment ? `/shipments/${order.shipment.id}/edit` : `/orders/${order.id}/shipments/create`" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500" title="Manage Shipment">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
@@ -204,8 +204,9 @@
 
 <script setup>
 import { defineProps, ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import { getStatusClass, getStatusColor } from "@/Utils/statusHelpers";
+import { route } from "vendor/tightenco/ziggy/src/js";
 
 const props = defineProps({
     orders: Array,
