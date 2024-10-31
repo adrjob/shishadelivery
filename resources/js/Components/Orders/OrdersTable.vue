@@ -206,7 +206,6 @@
 import { defineProps, ref } from "vue";
 import { Link, useForm } from "@inertiajs/vue3";
 import { getStatusClass, getStatusColor } from "@/Utils/statusHelpers";
-import { route } from "vendor/tightenco/ziggy/src/js";
 
 const props = defineProps({
     orders: Array,
