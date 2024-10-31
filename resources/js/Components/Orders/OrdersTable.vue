@@ -83,7 +83,7 @@
                                 {{ order.status }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 text-center">
+                        <!-- <td class="px-6 py-4 text-center">
                             <span
                                 :class="
                                     getStatusClass(
@@ -119,7 +119,7 @@
                                     ? order.total.toFixed(2)
                                     : "N/A"
                             }}
-                        </td>
+                        </td> -->
                         <td class="px-6 py-4 text-center">
                             <div class="flex justify-center gap-4">
                                 <a
