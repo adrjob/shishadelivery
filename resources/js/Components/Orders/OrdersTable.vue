@@ -165,7 +165,7 @@
                                                   'shipments.edit',
                                                   order.shipment.id
                                               )
-                                            : route('shipments.create')
+                                            : route('shipments.create', order.id)
                                     "
                                     class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500"
                                     title="Manage Shipment"
