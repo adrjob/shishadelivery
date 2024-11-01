@@ -20,13 +20,15 @@ class OrderDelivered extends Mailable
 
     public function build()
     {
-        return $this->subject('Your Order Has Been Delivered')
+        $fromAddress = env('MAIL_FROM_ADDRESS');
+        \Log::info('Enviando e-mail de: ' . $fromAddress);
+
+        return $this->from($fromAddress) // Use isto para forçar o uso do .env
+            ->subject('Your Order Has Been Delivered')
             ->view('emails.order-status', [
                 'order' => $this->order,
-                'isDeliverd' => true,
-                // 'title' => 'Order Delivered',
-                // 'message' => 'Good news! Your order has been delivered successfully.',
-                // 'additionalMessage' => 'Thank you for choosing us!'
+                'isDelivered' => true,
             ]);
     }
+
 }
